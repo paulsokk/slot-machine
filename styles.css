@@ -1,0 +1,19 @@
+.reels-window {
+  margin: auto;
+  border: 3px solid black;
+  width: 45.5em;
+  padding: 0.5em;
+  height: 30em;
+}
+
+.reel {
+  border: 1px solid blue;
+  /*margin-right: 0.25em;*/
+  width: 15em;
+  float: left;
+  height: 100%;
+}
+
+.reel-img {
+  width: 100%;
+}
