@@ -32,10 +32,34 @@ function Start(){
 
 function Update(){
     leftReel.reelImages[0].moveDown(.2);
-    if(Number(leftReel.reelImages[0].topPos) > Number(leftReel.reelImages[0].resetPosition)){
-        //leftReel.reelImages[0].resetPosition();
+    if(Number(leftReel.reelImages[0].topPos) > Number(leftReel.reelImages[0].circleBackPosition)){
+        //leftReel.reelImages[0].circleBackPosition();
         leftReel.reelImages[0].moveToPosition(leftReel.reelImages[0].topPosStart);
     }
+
+    leftReel.reelImages[1].moveDown(.2);
+    if(Number(leftReel.reelImages[1].topPos) > Number(leftReel.reelImages[1].circleBackPosition)){
+        //leftReel.reelImages[0].circleBackPosition();
+        leftReel.reelImages[1].moveToPosition(leftReel.reelImages[1].topPosStart);
+    }
+
+    leftReel.reelImages[2].moveDown(.2);
+    if(Number(leftReel.reelImages[2].topPos) > Number(leftReel.reelImages[2].circleBackPosition)){
+        //leftReel.reelImages[0].circleBackPosition();
+        leftReel.reelImages[2].moveToPosition(leftReel.reelImages[2].topPosStart);
+    }
+
+    leftReel.reelImages[3].moveDown(.2);
+    if(Number(leftReel.reelImages[3].topPos) > Number(leftReel.reelImages[3].circleBackPosition)){
+        //leftReel.reelImages[0].circleBackPosition();
+        leftReel.reelImages[3].moveToPosition(leftReel.reelImages[3].topPosStart);
+    }
+
+    /*leftReel.reelImages[4].moveDown(.2);
+    if(Number(leftReel.reelImages[4].topPos) > Number(leftReel.reelImages[4].circleBackPosition)){
+        //leftReel.reelImages[0].circleBackPosition();
+        leftReel.reelImages[4].moveToPosition(leftReel.reelImages[4].topPosStart);
+    }*/
 
     /*leftReel.reelImages[1].moveDown(.2);
     if(Number(leftReel.reelImages[1].topPos) > 300){

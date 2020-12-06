@@ -6,7 +6,7 @@ class ReelImg{
         this.topPosStart = this.style.getPropertyValue("top").replace("px", "");
         this.height = this.style.getPropertyValue("height").replace("px", "");
         this.type = this.element.getAttribute("reel-type");
-        this.resetPosition = 300;
+        this.circleBackPosition = 300;
     }
     
     moveDown(movePixels){
