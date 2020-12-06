@@ -8,19 +8,17 @@ class Reel{
         this.reelWindowHeight = this.windowStyle.getPropertyValue("height").replace("px", "");
     }
 
-    SetupReelImages(){
-        //var totalReelImagesHeight = this.getTotalReelImagesHeight();
+    setupReelImages(){
+        var totalReelImagesHeight = this.getTotalReelImagesHeight();
 
         for (var i = 0; i < this.reelImages.length; i++) {
             //setting reel image resetting starting position
-            var startingTopPosition = 0 /*+ this.windowTopValue*/ - this.reelImages[i].height;
-            console.log("0 + " + this.windowTopValue + " - " + this.reelImages[i].height);
+            var startingTopPosition = 0 - this.reelImages[i].height;
             this.reelImages[i].topPosStart = startingTopPosition;
 
             //setting reel image circleBackPosition position
-            var circleBackPosition = Number(startingTopPosition) + Number(this.reelImages[i].height) + Number(this.reelWindowHeight);
+            var circleBackPosition = Number(startingTopPosition) + totalReelImagesHeight;
             this.reelImages[i].circleBackPosition = circleBackPosition;
-            //console.log("circleBackPosition pos " + circleBackPosition);
 
             //setting first starting position
             var firstStartingPosition = circleBackPosition - Number(this.reelImages[i].height) * (i + 1);
@@ -28,13 +26,26 @@ class Reel{
         }
     }
 
-    /*getTotalReelImagesHeight(){
+    getTotalReelImagesHeight(){
         var totalHeight = 0;
         for (var i = 0; i < this.reelImages.length; i++) {
             var totalHeight = totalHeight + Number(this.reelImages[i].height);
         }
 
         return totalHeight;
+    }
 
-    }*/
+    move(moveSpeed){
+
+        for (var i = 0; i < this.reelImages.length; i++) {
+            this.reelImages[i].moveDown(moveSpeed);
+            //console.log(Number(this.reelImages[i].topPos) + " > " + Number(this.reelImages[i].circleBackPosition));
+            if(Number(this.reelImages[i].topPos) > Number(this.reelImages[i].circleBackPosition)){
+                //leftReel.reelImages[0].circleBackPosition();
+                this.reelImages[i].moveToPosition(this.reelImages[i].topPosStart);
+            }
+        }
+
+        
+    }
 }
