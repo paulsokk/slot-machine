@@ -1,5 +1,16 @@
-var reel1 = new Reel(document.getElementsByClassName("reel-img")[0]);
-console.log(reel1);
+var reelImageElementsArray = document.getElementsByClassName("reel-img");
+var leftReelWindowElement = document.getElementById("reel-window-left");
+var reelImagesArray = new Array();
+
+for (var i = 0; i < reelImageElementsArray.length; i++) {
+    reelImagesArray.push(new ReelImg(reelImageElementsArray[i]));
+}
+var leftReel = new Reel(reelImagesArray, leftReelWindowElement);
+leftReel.SetupReelImages();
+console.log(leftReel);
+
+
+//console.log(reel1);
 /*var reelImgStartPos0 = window.getComputedStyle(reelImg0).getPropertyValue("top").replace("px", "");
 
 var reelImg1 = document.getElementsByClassName("reel-img")[1];
@@ -20,10 +31,16 @@ function Start(){
 }
 
 function Update(){
-    reel1.moveDown(.2);
-    if(Number(reel1.topPos) > 300){
-        reel1.resetPosition();
+    leftReel.reelImages[0].moveDown(.2);
+    if(Number(leftReel.reelImages[0].topPos) > Number(leftReel.reelImages[0].resetPosition)){
+        //leftReel.reelImages[0].resetPosition();
+        leftReel.reelImages[0].moveToPosition(leftReel.reelImages[0].topPosStart);
     }
+
+    /*leftReel.reelImages[1].moveDown(.2);
+    if(Number(leftReel.reelImages[1].topPos) > 300){
+        leftReel.reelImages[1].resetPosition();
+    }*/
     /*ScrollDown(reelImg0, 0.6, 300, reelImgStartPos0);
     ScrollDown(reelImg1, 0.6, 300, reelImgStartPos1);
     ScrollDown(reelImg2, 0.6, 300, reelImgStartPos2);

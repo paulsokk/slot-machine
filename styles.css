@@ -1,4 +1,4 @@
-.reels-window {
+.all-reels-window {
   margin: auto;
   margin-top: 100px;
   border: 3px solid black;
@@ -7,21 +7,24 @@
   height: 300px;
 }
 
-.reel {
+.reel-window {
   border: 2px solid darkgray;
   border-radius: 6px;
   margin-right: 2.5px;
   width: 150px;
   float: left;
   height: 100%;
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 
 .reel-img {
-  top: -150px;
-  height: 129px;
-  width: 150px;
-  position: relative;
+  height: 121px;
+  width: 141px;
+  margin-left: 4px;
+  margin-right: 4px;
+  margin-top: 4px;
+  margin-bottom: 5px;
+  position: absolute;
 }
 
 /* The animation code */
