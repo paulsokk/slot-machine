@@ -1,4 +1,7 @@
 class Reel{
+
+    
+
     constructor (reelImages, reelWindowElement){
         this.reelImages = reelImages;
         this.reelWindowElement = reelWindowElement;
@@ -6,6 +9,7 @@ class Reel{
         this.windowTopValue = this.reelWindowElement.getBoundingClientRect().top;
         console.log(this.windowTopValue);
         this.reelWindowHeight = this.windowStyle.getPropertyValue("height").replace("px", "");
+        this.reelStateCounter = 0;
     }
 
     setupReelImages(){
@@ -42,10 +46,17 @@ class Reel{
             //console.log(Number(this.reelImages[i].topPos) + " > " + Number(this.reelImages[i].circleBackPosition));
             if(Number(this.reelImages[i].topPos) > Number(this.reelImages[i].circleBackPosition)){
                 //leftReel.reelImages[0].circleBackPosition();
-                this.reelImages[i].moveToPosition(this.reelImages[i].topPosStart);
+                this.reelImgCircledBack(this.reelImages[i]);
             }
-        }
+        }        
+    }
 
-        
+    reelImgCircledBack(inputReelImage){
+        inputReelImage.moveToPosition(inputReelImage.topPosStart);
+        this.reelStateCounter++;
+        if(this.reelStateCounter == this.reelImages.length){
+            this.reelStateCounter = 0;
+            this.setupReelImages();
+        }
     }
 }
