@@ -23,7 +23,7 @@ function LoopUpdate(){
 
 function SetDeltaTime(){
     var d = new Date();
-    deltaTime = d.getTime() - previousTime;
+    deltaTime = (d.getTime() - previousTime) * 0.001;
     previousTime = d.getTime();
 
 }

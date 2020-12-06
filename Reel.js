@@ -1,7 +1,5 @@
 class Reel{
 
-    
-
     constructor (reelImages, reelWindowElement){
         this.reelImages = reelImages;
         this.reelWindowElement = reelWindowElement;
@@ -10,6 +8,8 @@ class Reel{
         console.log(this.windowTopValue);
         this.reelWindowHeight = this.windowStyle.getPropertyValue("height").replace("px", "");
         this.reelStateCounter = 0;
+        this.rollSpeed = 0;
+        this.rollTimer = 0;
     }
 
     setupReelImages(){
@@ -39,10 +39,10 @@ class Reel{
         return totalHeight;
     }
 
-    move(moveSpeed){
-
+    move(){
+        this.rollTimer -= deltaTime;
         for (var i = 0; i < this.reelImages.length; i++) {
-            this.reelImages[i].moveDown(moveSpeed);
+            this.reelImages[i].moveDown(this.rollSpeed);
             //console.log(Number(this.reelImages[i].topPos) + " > " + Number(this.reelImages[i].circleBackPosition));
             if(Number(this.reelImages[i].topPos) > Number(this.reelImages[i].circleBackPosition)){
                 //leftReel.reelImages[0].circleBackPosition();
@@ -57,6 +57,20 @@ class Reel{
         if(this.reelStateCounter == this.reelImages.length){
             this.reelStateCounter = 0;
             this.setupReelImages();
+        }
+
+        this.reelPositionAchieved();
+    }
+
+    rollReel(rollTime, minRollSpeed, maxRollSpeed){
+        this.rollSpeed = Math.floor(Math.random() * maxRollSpeed) + minRollSpeed;  
+        this.rollTimer = rollTime;
+    }
+
+    reelPositionAchieved(){
+        if(this.rollTimer <= 0){
+            this.rollSpeed = 0;
+            console.log("stop");
         }
     }
 }
