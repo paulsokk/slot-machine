@@ -10,8 +10,6 @@ class Reel{
         this.reelStateCounter = 0;
         this.rollSpeed = 0;
         this.rollTimer = 0;
-        this.lastPositionWasHalf = false;
-        this.positionFixed = false;
     }
 
     setupReelImages(){
@@ -45,22 +43,19 @@ class Reel{
 
         if(this.rollSpeed == 0){
             return;
-            
         }
 
         this.rollTimer -= deltaTime;
         for (var i = 0; i < this.reelImages.length; i++) {
+
             this.reelImages[i].moveDown(this.rollSpeed);
-            //console.log(Number(this.reelImages[i].topPos) + " > " + Number(this.reelImages[i].circleBackPosition));
+
             if(Number(this.reelImages[i].topPos) >= Number(this.reelImages[i].circleBackPosition)){
-                //leftReel.reelImages[0].circleBackPosition();
+
                 this.reelImgCircledBack(this.reelImages[i]);
-            }else if(
-                (
-                    (Number(this.reelImages[i].topPos) >= (Number(this.reelImages[i].circleBackPosition) - this.reelImages[i].height / 2)) && 
-                    (Number(this.reelImages[i].topPos) < Number(this.reelImages[i].circleBackPosition))  
-                ) && 
-                 this.lastPositionWasHalf == false){
+                
+            }else if( (Number(this.reelImages[i].topPos) >= (Number(this.reelImages[i].circleBackPosition) - this.reelImages[i].height / 2)) && (Number(this.reelImages[i].topPos) < Number(this.reelImages[i].circleBackPosition)) ){
+
                     this.reelHalfPositionAchieved();
                     var posDiff = (Number(this.reelImages[i].circleBackPosition) - this.reelImages[i].height / 2) - Number(this.reelImages[i].topPos);
                     this.fixPositionMove(posDiff);
@@ -87,7 +82,6 @@ class Reel{
     }
 
     reelPositionAchieved(){
-        this.lastPositionWasHalf == false;
         
         if(this.rollTimer <= 0){
             this.rollSpeed = 0;
@@ -97,7 +91,6 @@ class Reel{
     }
 
     reelHalfPositionAchieved(){
-        this.lastPositionWasHalf == true;
         
         if(this.rollTimer <= 0){
             this.rollSpeed = 0;
