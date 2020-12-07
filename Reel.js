@@ -10,6 +10,7 @@ class Reel{
         this.reelStateCounter = 0;
         this.rollSpeed = 0;
         this.rollTimer = 0;
+        this.lastPositionWasHalf = true;
     }
 
     setupReelImages(){
@@ -54,7 +55,7 @@ class Reel{
 
                 this.reelImgCircledBack(this.reelImages[i]);
                 
-            }else if( (Number(this.reelImages[i].topPos) >= (Number(this.reelImages[i].circleBackPosition) - this.reelImages[i].height / 2)) && (Number(this.reelImages[i].topPos) < Number(this.reelImages[i].circleBackPosition)) ){
+            }else if( ((Number(this.reelImages[i].topPos) >= (Number(this.reelImages[i].circleBackPosition) - this.reelImages[i].height / 2)) && (Number(this.reelImages[i].topPos) < Number(this.reelImages[i].circleBackPosition))) && this.lastPositionWasHalf == false){
 
                     this.reelHalfPositionAchieved();
                     var posDiff = (Number(this.reelImages[i].circleBackPosition) - this.reelImages[i].height / 2) - Number(this.reelImages[i].topPos);
@@ -66,6 +67,7 @@ class Reel{
     }
 
     reelImgCircledBack(inputReelImage){
+        //console.log(this.rollTimer);
         inputReelImage.moveToPosition(inputReelImage.topPosStart);
         this.reelStateCounter++;
         if(this.reelStateCounter == this.reelImages.length){
@@ -82,19 +84,21 @@ class Reel{
     }
 
     reelPositionAchieved(){
+        this.lastPositionWasHalf = false;
         
         if(this.rollTimer <= 0){
             this.rollSpeed = 0;
-            console.log("stop");
+            //console.log("stop");
             //fixPositionMove();
         }
     }
 
     reelHalfPositionAchieved(){
+        this.lastPositionWasHalf = true;
         
         if(this.rollTimer <= 0){
             this.rollSpeed = 0;
-            console.log("middle stop");
+            //console.log("middle stop");
             //fixPositionMove();
         }
     }
@@ -103,12 +107,12 @@ class Reel{
 
         
         if(this.rollTimer <= 0){
-            console.log("pos diff is: " + positionDiff + " first img pos is: " + this.reelImages[0].topPos);
+            //console.log("pos diff is: " + positionDiff + " first img pos is: " + this.reelImages[0].topPos);
             for (var i = 0; i < this.reelImages.length; i++) {
                 this.reelImages[i].moveDownPixels(positionDiff);
                 
             }
-            console.log("new first img pos is: " + this.reelImages[0].topPos);
+            //console.log("new first img pos is: " + this.reelImages[0].topPos);
         }
         
         
