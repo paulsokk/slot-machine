@@ -1,11 +1,11 @@
 class Reel{
 
-    constructor (reelImages, reelWindowElement){
+    constructor (reelImages, reelWindowElement, reelWindowId){
+        this.reelType = reelWindowId.replace("reel-window-", "");
         this.reelImages = reelImages;
         this.reelWindowElement = reelWindowElement;
         this.windowStyle = window.getComputedStyle(this.reelWindowElement);
         this.windowTopValue = this.reelWindowElement.getBoundingClientRect().top;
-        console.log(this.windowTopValue);
         this.reelWindowHeight = this.windowStyle.getPropertyValue("height").replace("px", "");
         this.reelStateCounter = 0;
         this.rollSpeed = 0;
@@ -57,17 +57,16 @@ class Reel{
                 
             }else if( ((Number(this.reelImages[i].topPos) >= (Number(this.reelImages[i].circleBackPosition) - this.reelImages[i].height / 2)) && (Number(this.reelImages[i].topPos) < Number(this.reelImages[i].circleBackPosition))) && this.lastPositionWasHalf == false){
 
-                    this.reelHalfPositionAchieved();
-                    var posDiff = (Number(this.reelImages[i].circleBackPosition) - this.reelImages[i].height / 2) - Number(this.reelImages[i].topPos);
-                    this.fixPositionMove(posDiff);
+                this.reelHalfPositionAchieved();
+                var posDiff = (Number(this.reelImages[i].circleBackPosition) - this.reelImages[i].height / 2) - Number(this.reelImages[i].topPos);
+                this.fixPositionMove(posDiff);
 
             }
-        }   
-
+        }
     }
 
     reelImgCircledBack(inputReelImage){
-        //console.log(this.rollTimer);
+        
         inputReelImage.moveToPosition(inputReelImage.topPosStart);
         this.reelStateCounter++;
         if(this.reelStateCounter == this.reelImages.length){
@@ -88,8 +87,9 @@ class Reel{
         
         if(this.rollTimer <= 0){
             this.rollSpeed = 0;
-            //console.log("stop");
-            //fixPositionMove();
+            var topResult = this.reelImages[this.getReelTopRowIndex()].type;
+            var bottomResult = this.reelImages[this.getReelBottomRowIndex()].type;
+            this.saveReelResults(topResult, "", bottomResult);
         }
     }
 
@@ -98,23 +98,56 @@ class Reel{
         
         if(this.rollTimer <= 0){
             this.rollSpeed = 0;
-            //console.log("middle stop");
-            //fixPositionMove();
+            var centerResult = this.reelImages[this.getReelTopRowIndex()].type;
+            this.saveReelResults("", centerResult, "");
         }
     }
 
     fixPositionMove(positionDiff){
 
-        
         if(this.rollTimer <= 0){
-            //console.log("pos diff is: " + positionDiff + " first img pos is: " + this.reelImages[0].topPos);
             for (var i = 0; i < this.reelImages.length; i++) {
                 this.reelImages[i].moveDownPixels(positionDiff);
                 
             }
-            //console.log("new first img pos is: " + this.reelImages[0].topPos);
         }
-        
-        
+    }
+
+    getReelTopRowIndex(){
+        var imgIndex = this.reelStateCounter - 2;
+        if(imgIndex < 0){
+            return this.reelImages.length + imgIndex;
+        }
+        return imgIndex;
+    }
+
+    getReelBottomRowIndex(){
+        var imgIndex = this.reelStateCounter - 3;
+        if(imgIndex < 0){
+            return this.reelImages.length + imgIndex;
+        }
+        return imgIndex;
+    }
+
+    saveReelResults(topResult, centerResult, bottomResult){
+        switch(this.reelType) {
+            case "left":
+                rowResults[0][0] = topResult;
+                rowResults[0][1] = centerResult;
+                rowResults[0][2] = bottomResult;
+                break;
+            case "middle":
+                rowResults[1][0] = topResult;
+                rowResults[1][1] = centerResult;
+                rowResults[1][2] = bottomResult;
+                break;
+            case "right":
+                rowResults[2][0] = topResult;
+                rowResults[2][1] = centerResult;
+                rowResults[2][2] = bottomResult;
+                break;
+            default:
+              console.error("Reel window class name is wrong");
+          }
     }
 }

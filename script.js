@@ -3,6 +3,12 @@ var leftReel;
 var middleReel;
 var rightReel;
 
+var rowResults = [
+    ['', '', ''],
+    ['', '', ''],
+    ['', '', '']
+];
+
 
 function Start(){
     
@@ -32,7 +38,7 @@ function createReel(reelWindowId){
     for (var i = 0; i < reelImageElementsArray.length; i++) {
         reelImagesArray.push(new ReelImg(reelImageElementsArray[i]));
     }
-    var reel = new Reel(reelImagesArray, reelWindowElement);
+    var reel = new Reel(reelImagesArray, reelWindowElement, reelWindowId);
     reel.setupReelImages();
     return reel;
 }
