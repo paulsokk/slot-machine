@@ -10,6 +10,8 @@ class Reel{
         this.reelStateCounter = 0;
         this.rollSpeed = 0;
         this.rollTimer = 0;
+        this.lastPositionWasHalf = false;
+        this.positionFixed = false;
     }
 
     setupReelImages(){
@@ -40,15 +42,32 @@ class Reel{
     }
 
     move(){
+
+        if(this.rollSpeed == 0){
+            return;
+            
+        }
+
         this.rollTimer -= deltaTime;
         for (var i = 0; i < this.reelImages.length; i++) {
             this.reelImages[i].moveDown(this.rollSpeed);
             //console.log(Number(this.reelImages[i].topPos) + " > " + Number(this.reelImages[i].circleBackPosition));
-            if(Number(this.reelImages[i].topPos) > Number(this.reelImages[i].circleBackPosition)){
+            if(Number(this.reelImages[i].topPos) >= Number(this.reelImages[i].circleBackPosition)){
                 //leftReel.reelImages[0].circleBackPosition();
                 this.reelImgCircledBack(this.reelImages[i]);
+            }else if(
+                (
+                    (Number(this.reelImages[i].topPos) >= (Number(this.reelImages[i].circleBackPosition) - this.reelImages[i].height / 2)) && 
+                    (Number(this.reelImages[i].topPos) < Number(this.reelImages[i].circleBackPosition))  
+                ) && 
+                 this.lastPositionWasHalf == false){
+                    this.reelHalfPositionAchieved();
+                    var posDiff = (Number(this.reelImages[i].circleBackPosition) - this.reelImages[i].height / 2) - Number(this.reelImages[i].topPos);
+                    this.fixPositionMove(posDiff);
+
             }
-        }        
+        }   
+
     }
 
     reelImgCircledBack(inputReelImage){
@@ -68,9 +87,37 @@ class Reel{
     }
 
     reelPositionAchieved(){
+        this.lastPositionWasHalf == false;
+        
         if(this.rollTimer <= 0){
             this.rollSpeed = 0;
             console.log("stop");
+            //fixPositionMove();
         }
+    }
+
+    reelHalfPositionAchieved(){
+        this.lastPositionWasHalf == true;
+        
+        if(this.rollTimer <= 0){
+            this.rollSpeed = 0;
+            console.log("middle stop");
+            //fixPositionMove();
+        }
+    }
+
+    fixPositionMove(positionDiff){
+
+        
+        if(this.rollTimer <= 0){
+            console.log("pos diff is: " + positionDiff + " first img pos is: " + this.reelImages[0].topPos);
+            for (var i = 0; i < this.reelImages.length; i++) {
+                this.reelImages[i].moveDownPixels(positionDiff);
+                
+            }
+            console.log("new first img pos is: " + this.reelImages[0].topPos);
+        }
+        
+        
     }
 }

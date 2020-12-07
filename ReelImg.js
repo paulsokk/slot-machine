@@ -9,8 +9,14 @@ class ReelImg{
         this.circleBackPosition = 300;
     }
     
-    moveDown(movePixels){
-        this.element.style.top = (Number(this.topPos) + (movePixels*deltaTime)) + "px";
+    moveDown(moveSpeed){
+        this.element.style.top = (Number(this.topPos) + (moveSpeed*deltaTime)) + "px";
+        this.topPos = this.style.getPropertyValue("top").replace("px", "");
+        //console.log(this.topPos);
+    }
+
+    moveDownPixels(movePixels){
+        this.element.style.top = (Number(this.topPos) + movePixels) + "px";
         this.topPos = this.style.getPropertyValue("top").replace("px", "");
         //console.log(this.topPos);
     }
