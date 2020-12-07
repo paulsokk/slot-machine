@@ -9,11 +9,6 @@ function Start(){
     leftReel = createReel("reel-window-left");
     middleReel = createReel("reel-window-middle");
     rightReel = createReel("reel-window-right");
-
-    leftReel.rollReel(2.0, 400, 800);
-    middleReel.rollReel(2.5, 400, 800);
-    rightReel.rollReel(3.0, 400, 800);
-
 }
 
 function Update(){
@@ -21,6 +16,12 @@ function Update(){
     middleReel.move();
     rightReel.move();
     
+}
+
+function spin(){
+    leftReel.rollReel(2.0, 400, 800);
+    middleReel.rollReel(2.5, 400, 800);
+    rightReel.rollReel(3.0, 400, 800);
 }
 
 function createReel(reelWindowId){

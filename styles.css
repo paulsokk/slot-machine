@@ -28,6 +28,18 @@
   position: absolute;
 }
 
+.spin-button-area {
+  width: 100%;
+  position: relative;
+  top: 50px;
+}
+
+#spin-button {
+  width: 100%;
+  height: 50px;
+  font-size: large;
+}
+
 /* The animation code */
 /*@keyframes example {
   0% {
