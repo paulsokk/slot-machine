@@ -148,6 +148,6 @@ class Reel{
                 break;
             default:
               console.error("Reel window class name is wrong");
-          }
+        }
     }
 }

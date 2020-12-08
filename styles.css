@@ -16,7 +16,7 @@
   float: left;
   height: 100%;
   position: relative;
-  /*overflow: hidden;*/
+  overflow: hidden;
   box-shadow: inset 0px 18px 12px -15px rgba(0, 0, 0, 1),
     inset 0px -18px 12px -15px rgba(0, 0, 0, 1);
   background-color: white;
