@@ -149,5 +149,13 @@ class Reel{
             default:
               console.error("Reel window class name is wrong");
         }
+
+        this.showAllResults();
+    }
+
+    showAllResults(){
+        if(leftReel.rollSpeed == 0 && middleReel.rollSpeed == 0 && rightReel.rollSpeed == 0){
+            results();
+        }
     }
 }

@@ -9,6 +9,17 @@ var rowResults = [
     ['', '', '']
 ];
 
+//the order of these array elements are set to the win sum amounts (from hight to low)
+var tableWinIds = [
+    "3-cherry-bottom", "3-cherry-top", "3-cherry-center", 
+    "3-7-top", "3-7-center", "3-7-bottom", 
+    "cherry-7-top", "cherry-7-center", "cherry-7-bottom", 
+    "3-3xbar-top", "3-3xbar-center", "3-3xbar-bottom", 
+    "3-2xbar-top", "3-2xbar-center", "3-2xbar-bottom", 
+    "3-bar-top", "3-bar-center", "3-bar-bottom", 
+    "3-anybars-top", "3-anybars-center", "3-anybars-bottom", 
+];
+
 
 function Start(){
     
@@ -30,7 +41,10 @@ function spin(){
         middleReel.rollReel(2.5, 400, 800);
         rightReel.rollReel(3.0, 400, 800); 
 
-        setTimeout(results, 3500);
+        hideWinLine("top");
+        hideWinLine("center");
+        hideWinLine("bottom");
+        stopAllBlinkingWinTable();
     }
 }
 
@@ -48,29 +62,18 @@ function createReel(reelWindowId){
 }
 
 function results(){
-    console.log(rowResults);
-    
-    //the order of these array elements are set to the win sum amounts (from hight to low)
-    var tableWinIdsTocheck = [
-        "3-cherry-bottom", "3-cherry-top", "3-cherry-center", 
-        "3-7-top", "3-7-center", "3-7-bottom", 
-        "cherry-7-top", "cherry-7-center", "cherry-7-bottom", 
-        "3-3xbar-top", "3-3xbar-center", "3-3xbar-bottom", 
-        "3-2xbar-top", "3-2xbar-center", "3-2xbar-bottom", 
-        "3-bar-top", "3-bar-center", "3-bar-bottom", 
-        "3-anybars-top", "3-anybars-center", "3-anybars-bottom", 
-    ];
 
     var winAmount = 0;
-    for(var i = 0; i < tableWinIdsTocheck.length; i++){
-        winAmount = checkWin(tableWinIdsTocheck[i]);
+    for(var i = 0; i < tableWinIds.length; i++){
+        winAmount = checkWin(tableWinIds[i]);
         if(winAmount > 0){
             break;
         }
     }
 
-    if(i < tableWinIdsTocheck.length){
-        console.log("win achieved! Start blinking " + tableWinIdsTocheck[i]);
+    if(i < tableWinIds.length){
+        showWinLine(tableWinIds[i].split("-")[2]);
+        startBlinkingWinTable(tableWinIds[i])
     }else{
         console.log("no win");
     }
@@ -161,6 +164,25 @@ function checkWin(winTag){
         console.error("win tag is wrong: " + winTag);
     }
 
+}
+
+function showWinLine(winLineType){
+    document.getElementById("win-overlay-"+winLineType+"-line").style.display = "block";
+}
+
+function hideWinLine(winLineType){
+    document.getElementById("win-overlay-"+winLineType+"-line").style.display = "none";
+}
+
+function startBlinkingWinTable(winTableId){
+    document.getElementById(winTableId).classList.add("blinking");
+
+}
+
+function stopAllBlinkingWinTable(){
+    for(var i = 0; i < tableWinIds.length; i++){
+        document.getElementById(tableWinIds[i]).classList.remove("blinking");
+    }
 }
 
 /*function getPayTableIdName(){
