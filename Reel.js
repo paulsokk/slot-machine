@@ -39,7 +39,6 @@ class Reel{
         for (var i = 0; i < this.reelImages.length; i++) {
             var totalHeight = totalHeight + Number(this.reelImages[i].height);
         }
-
         return totalHeight;
     }
 
@@ -69,6 +68,7 @@ class Reel{
     }
 
     reelImgCircledBack(inputReelImage){
+        /* The input reel image is moved to the top of the reel to leave the inpression of a spinning wheel */
         
         inputReelImage.moveToPosition(inputReelImage.topPosStart);
         this.reelStateCounter++;
@@ -81,6 +81,8 @@ class Reel{
     }
 
     rollReel(rollTime, minRollSpeed, maxRollSpeed){
+        /* The method that starts the rolling */
+
         this.isFixed = false;
         this.fixedReelImageType = "";
         this.fixedReelImageRow = "";
@@ -90,6 +92,8 @@ class Reel{
     }
 
     rollReelFixed(rollTime, minRollSpeed, maxRollSpeed, reelImgType, reelImgRow){
+        /* The method that starts the fixed rolling */
+
         this.isFixed = true;
         this.fixedReelImageType = reelImgType;
         this.fixedReelImageRow = reelImgRow;
@@ -100,19 +104,21 @@ class Reel{
     }
 
     reelPositionAchieved(){
+        /* This method is launched whenever the reel is in the full-position where reelImages are at the top and bottom of reel window */
+
         this.lastPositionWasHalf = false;
         
         if(this.rollTimer <= 0 && this.isFixed == false){
             this.rollSpeed = 0;
-            var topResult = this.reelImages[this.getReelTopRowIndex()].type;
+            var topResult = this.reelImages[this.getReelTopMiddleRowIndex()].type;
             var bottomResult = this.reelImages[this.getReelBottomRowIndex()].type;
             this.saveReelResults(topResult, "", bottomResult);
-            
+
         }else if(this.rollTimer <= 0 && this.isFixed == true){
 
             var typeOfCurrentReelImage = "";
             if(this.fixedReelImageRow == "top"){
-                typeOfCurrentReelImage = this.reelImages[this.getReelTopRowIndex()].type;
+                typeOfCurrentReelImage = this.reelImages[this.getReelTopMiddleRowIndex()].type;
             }else if(this.fixedReelImageRow == "bottom"){
                 typeOfCurrentReelImage = this.reelImages[this.getReelBottomRowIndex()].type;
             }else{
@@ -121,7 +127,7 @@ class Reel{
 
             if(typeOfCurrentReelImage == this.fixedReelImageType){
                 this.rollSpeed = 0;
-                var topResult = this.reelImages[this.getReelTopRowIndex()].type;
+                var topResult = this.reelImages[this.getReelTopMiddleRowIndex()].type;
                 var bottomResult = this.reelImages[this.getReelBottomRowIndex()].type;
                 this.saveReelResults(topResult, "", bottomResult);
             }
@@ -129,30 +135,33 @@ class Reel{
     }
 
     reelHalfPositionAchieved(){
+        /* This method is launched whenever the reel is in the half-position where reelImage is in the centre of reel window */
+
         this.lastPositionWasHalf = true;
         
         if(this.rollTimer <= 0 && this.isFixed == false){
             this.rollSpeed = 0;
-            var centerResult = this.reelImages[this.getReelTopRowIndex()].type;
+            var centerResult = this.reelImages[this.getReelTopMiddleRowIndex()].type;
             this.saveReelResults("", centerResult, "");
         }else if(this.rollTimer <= 0 && this.isFixed == true){
 
             var typeOfCurrentReelImage = "";
             if(this.fixedReelImageRow == "center"){
-                typeOfCurrentReelImage = this.reelImages[this.getReelTopRowIndex()].type;
+                typeOfCurrentReelImage = this.reelImages[this.getReelTopMiddleRowIndex()].type;
             }else{
                 return;
             }
 
             if(typeOfCurrentReelImage == this.fixedReelImageType){
                 this.rollSpeed = 0;
-                var centerResult = this.reelImages[this.getReelTopRowIndex()].type;
+                var centerResult = this.reelImages[this.getReelTopMiddleRowIndex()].type;
                 this.saveReelResults("", centerResult, "");
             }
         }
     }
 
     fixPositionMove(positionDiff){
+        /*Corrects the small position difference caused by movement refresh differences */
 
         if(this.rollTimer <= 0){
             for (var i = 0; i < this.reelImages.length; i++) {
@@ -162,7 +171,10 @@ class Reel{
         }
     }
 
-    getReelTopRowIndex(){
+    getReelTopMiddleRowIndex(){
+        /* For getting the index of the image, that is seen on the top row of the reel window when calling this method. */
+        /* ...or the the index of the image, that is seen on the centre row of the reel window when calling this method. Centre row is returned only when this method is called during the reelHalfPositionAchieved() */
+
         var imgIndex = this.reelStateCounter - 2;
         if(imgIndex < 0){
             return this.reelImages.length + imgIndex;
@@ -171,6 +183,8 @@ class Reel{
     }
 
     getReelBottomRowIndex(){
+        /* For getting the index of the image, that is seen on the bottom row of the reel window when calling this method. */
+
         var imgIndex = this.reelStateCounter - 3;
         if(imgIndex < 0){
             return this.reelImages.length + imgIndex;
@@ -179,6 +193,8 @@ class Reel{
     }
 
     saveReelResults(topResult, centerResult, bottomResult){
+        /* Saves all the values to the global 2D array of the input reel results. */
+
         switch(this.reelType) {
             case "left":
                 rowResults[0][0] = topResult;
@@ -203,6 +219,8 @@ class Reel{
     }
 
     showAllResults(){
+        /* When all reels have stopped, it runs a method that rewards the player and shows what he/she won, if they did. */
+
         if(leftReel.rollSpeed == 0 && middleReel.rollSpeed == 0 && rightReel.rollSpeed == 0){
             results();
         }

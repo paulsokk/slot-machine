@@ -1,4 +1,3 @@
-
 var leftReel;
 var middleReel;
 var rightReel;
@@ -22,7 +21,6 @@ var tableWinIds = [
 
 
 function Start(){
-    
     leftReel = createReel("reel-window-left");
     middleReel = createReel("reel-window-middle");
     rightReel = createReel("reel-window-right");
@@ -37,11 +35,10 @@ function Update(){
 
 function spin(){
 
-    if(getBalance() > 0){
-        addToBalance(-1);
-    }else{
+    if(getBalance() <= 0){
         return;
     }
+    addToBalance(-1);
 
     if(leftReel.rollSpeed == 0 && middleReel.rollSpeed == 0 && rightReel.rollSpeed == 0){
         
@@ -217,32 +214,3 @@ function getBalance(){
 function addToBalance(amountToAdd){
     document.getElementById("balance").value = Number(document.getElementById("balance").value) + Number(amountToAdd);
 }
-
-/*function getPayTableIdName(){
-    var idNameToReturn = "";
-    var topWinAmount = 0;
-
-    //bottom row, three in a row
-    if(rowResults[0][2] == rowResults[1][2] == rowResults[2][2]){
-        idNameToReturn += "3-";
-        idNameToReturn += rowResults[0][2];
-        idNameToReturn += "-bottom";
-        return idNameToReturn;
-    }
-
-    //top row, three in a row
-    if(rowResults[0][0] == rowResults[1][0] == rowResults[2][0]){
-        idNameToReturn += "3-";
-        idNameToReturn += rowResults[0][0];
-        idNameToReturn += "-top";
-        return idNameToReturn;
-    }
-
-    //top row, three in a row
-    if(rowResults[0][0] == rowResults[1][0] == rowResults[2][0]){
-        idNameToReturn += "3-";
-        idNameToReturn += rowResults[0][0];
-        idNameToReturn += "-top";
-        return idNameToReturn;
-    }
-}*/

@@ -10,6 +10,7 @@ class ReelImg{
     }
     
     moveDown(moveSpeed){
+        /* Should be used when moving reel images at a consistant pace. Moves the reel image down by input amount per second. */
         this.element.style.top = (Number(this.topPos) + (moveSpeed*deltaTime)) + "px";
         this.topPos = this.style.getPropertyValue("top").replace("px", "");
     }

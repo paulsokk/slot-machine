@@ -27,5 +27,3 @@ function SetDeltaTime(){
     previousTime = d.getTime();
 
 }
-
-/*FUNCTIONS*/
