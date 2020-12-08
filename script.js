@@ -36,6 +36,13 @@ function Update(){
 }
 
 function spin(){
+
+    if(getBalance() > 0){
+        addToBalance(-1);
+    }else{
+        return;
+    }
+
     if(leftReel.rollSpeed == 0 && middleReel.rollSpeed == 0 && rightReel.rollSpeed == 0){
         
         if(document.getElementById("spin-mode").value == "random"){
@@ -84,6 +91,7 @@ function results(){
     for(var i = 0; i < tableWinIds.length; i++){
         winAmount = checkWin(tableWinIds[i]);
         if(winAmount > 0){
+            addToBalance(winAmount);
             break;
         }
     }
@@ -200,6 +208,14 @@ function stopAllBlinkingWinTable(){
     for(var i = 0; i < tableWinIds.length; i++){
         document.getElementById(tableWinIds[i]).classList.remove("blinking");
     }
+}
+
+function getBalance(){
+    return document.getElementById("balance").value;
+}
+
+function addToBalance(amountToAdd){
+    document.getElementById("balance").value = Number(document.getElementById("balance").value) + Number(amountToAdd);
 }
 
 /*function getPayTableIdName(){
