@@ -11,6 +11,9 @@ class Reel{
         this.rollSpeed = 0;
         this.rollTimer = 0;
         this.lastPositionWasHalf = true;
+        this.isFixed = false;
+        this.fixedReelImageType = "";
+        this.fixedReelImageRow = "";
     }
 
     setupReelImages(){
@@ -78,28 +81,74 @@ class Reel{
     }
 
     rollReel(rollTime, minRollSpeed, maxRollSpeed){
+        this.isFixed = false;
+        this.fixedReelImageType = "";
+        this.fixedReelImageRow = "";
+
         this.rollSpeed = Math.floor(Math.random() * maxRollSpeed) + minRollSpeed;  
         this.rollTimer = rollTime;
+    }
+
+    rollReelFixed(rollTime, minRollSpeed, maxRollSpeed, reelImgType, reelImgRow){
+        this.isFixed = true;
+        this.fixedReelImageType = reelImgType;
+        this.fixedReelImageRow = reelImgRow;
+
+        this.rollSpeed = Math.floor(Math.random() * maxRollSpeed) + minRollSpeed;  
+        this.rollTimer = rollTime;
+
     }
 
     reelPositionAchieved(){
         this.lastPositionWasHalf = false;
         
-        if(this.rollTimer <= 0){
+        if(this.rollTimer <= 0 && this.isFixed == false){
             this.rollSpeed = 0;
             var topResult = this.reelImages[this.getReelTopRowIndex()].type;
             var bottomResult = this.reelImages[this.getReelBottomRowIndex()].type;
             this.saveReelResults(topResult, "", bottomResult);
+            
+        }else if(this.rollTimer <= 0 && this.isFixed == true){
+
+            var typeOfCurrentReelImage = "";
+            if(this.fixedReelImageRow == "top"){
+                typeOfCurrentReelImage = this.reelImages[this.getReelTopRowIndex()].type;
+            }else if(this.fixedReelImageRow == "bottom"){
+                typeOfCurrentReelImage = this.reelImages[this.getReelBottomRowIndex()].type;
+            }else{
+                return;
+            }
+
+            if(typeOfCurrentReelImage == this.fixedReelImageType){
+                this.rollSpeed = 0;
+                var topResult = this.reelImages[this.getReelTopRowIndex()].type;
+                var bottomResult = this.reelImages[this.getReelBottomRowIndex()].type;
+                this.saveReelResults(topResult, "", bottomResult);
+            }
         }
     }
 
     reelHalfPositionAchieved(){
         this.lastPositionWasHalf = true;
         
-        if(this.rollTimer <= 0){
+        if(this.rollTimer <= 0 && this.isFixed == false){
             this.rollSpeed = 0;
             var centerResult = this.reelImages[this.getReelTopRowIndex()].type;
             this.saveReelResults("", centerResult, "");
+        }else if(this.rollTimer <= 0 && this.isFixed == true){
+
+            var typeOfCurrentReelImage = "";
+            if(this.fixedReelImageRow == "center"){
+                typeOfCurrentReelImage = this.reelImages[this.getReelTopRowIndex()].type;
+            }else{
+                return;
+            }
+
+            if(typeOfCurrentReelImage == this.fixedReelImageType){
+                this.rollSpeed = 0;
+                var centerResult = this.reelImages[this.getReelTopRowIndex()].type;
+                this.saveReelResults("", centerResult, "");
+            }
         }
     }
 

@@ -37,9 +37,26 @@ function Update(){
 
 function spin(){
     if(leftReel.rollSpeed == 0 && middleReel.rollSpeed == 0 && rightReel.rollSpeed == 0){
-        leftReel.rollReel(2.0, 400, 800);
-        middleReel.rollReel(2.5, 400, 800);
-        rightReel.rollReel(3.0, 400, 800); 
+        
+        if(document.getElementById("spin-mode").value == "random"){
+            console.log("Random spin");
+            leftReel.rollReel(2.0, 400, 800);
+            middleReel.rollReel(2.5, 400, 800);
+            rightReel.rollReel(3.0, 400, 800);
+        }else{
+            console.log("Fixed spin");
+
+            var leftReelImageType = document.getElementById("left-reel-symbol").value;
+            var leftReelImageRow = document.getElementById("left-reel-position").value;
+            var middleReelImageType = document.getElementById("middle-reel-symbol").value;
+            var middleReelImageRow = document.getElementById("middle-reel-position").value;
+            var rightReelImageType = document.getElementById("right-reel-symbol").value;
+            var rightReelImageRow = document.getElementById("right-reel-position").value;
+
+            leftReel.rollReelFixed(2.0, 400, 800, leftReelImageType, leftReelImageRow);
+            middleReel.rollReelFixed(2.5, 400, 800, middleReelImageType, middleReelImageRow);
+            rightReel.rollReelFixed(3.0, 400, 800, rightReelImageType, rightReelImageRow);
+        }
 
         hideWinLine("top");
         hideWinLine("center");
