@@ -112,7 +112,7 @@ body {
 }
 
 .pay-table th,
-td {
+.pay-table td {
   background-color: rgb(255, 247, 210);
   margin: 0;
   padding: 3px;
@@ -123,6 +123,29 @@ td {
   margin: 0;
   padding: 3px;
   font-size: 24px;
+}
+
+.debug-area {
+  width: 469.5px;
+  margin: auto;
+  position: relative;
+  top: 65px;
+  border-radius: 5px;
+  border: 2px solid gray;
+}
+
+.debug-area table {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.debug-area select {
+  width: 100%;
+}
+
+.debug-area h4 {
+  font-size: 24px;
+  text-align: center;
 }
 
 .blinking {
